@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARDI77 - Slot Online Mahjong</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b3d91;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 3rem;
+      letter-spacing: 4px;
+      font-weight: bold;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffd700;
+    }
+    h2 {
+      margin-bottom: 30px;
+      font-weight: normal;
+      color: #f0e68c;
+    }
+    #slot-machine {
+      display: inline-grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 10px;
+      margin-bottom: 20px;
+      background: #072663;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #1e90ff;
+    }
+    .slot-cell {
+      background: #1e3c72;
+      border-radius: 8px;
+      font-size: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #ffcc00;
+      color: #0b3d91;
+      font-weight: bold;
+      box-shadow: 0 4px #b29600;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #ffd633;
+    }
+    button:active {
+      box-shadow: none;
+      transform: translateY(2px);
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 26px;
+      min-height: 30px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ARDI77</h1>
+  <h2>Slot Online Mahjong</h2>
+  
+  <div id="slot-machine">
+    <!-- 9 slot cells -->
+  </div>
+
+  <button id="spin-btn">Spin</button>
+
+  <div id="result"></div>
+
+<script>
+  const mahjongSymbols = ['🀄', '🀅', '🀆', '🀇', '🀈', '🀉', '🀊', '🀋', '🀌']; 
+  const slotMachine = document.getElementById('slot-machine');
+  const spinBtn = document.getElementById('spin-btn');
+  const resultDiv = document.getElementById('result');
+
+  for(let i=0; i<9; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('slot-cell');
+    cell.textContent = '❓';
+    slotMachine.appendChild(cell);
+  }
+
+  function getRandomSymbol() {
+    return mahjongSymbols[Math.floor(Math.random() * mahjongSymbols.length)];
+  }
+
+  function spinSlots() {
+    const cells = document.querySelectorAll('.slot-cell');
+    let slots = [];
+
+    cells.forEach(cell => {
+      const symbol = getRandomSymbol();
+      cell.textContent = symbol;
+      slots.push(symbol);
+    });
+
+    checkResult(slots);
+  }
+
+  function checkResult(slots) {
+    let win = false;
+    for(let row=0; row<3; row++) {
+      const start = row * 3;
+      if(slots[start] === slots[start+1] && slots[start] === slots[start+2]) {
+        win = true;
+        break;
+      }
+    }
+    if(win) {
+      resultDiv.textContent = '🎉 Kamu Menang! 🎉';
+      resultDiv.style.color = 'lime';
+    } else {
+      resultDiv.textContent = 'Coba Lagi!';
+      resultDiv.style.color = 'white';
+    }
+  }
+
+  spinBtn.addEventListener('click', spinSlots);
+</script>
+
+</body>
+</html>
